@@ -3,7 +3,7 @@ import React from 'react';
 class Equal extends React.Component {
   render(){
     return(
-      <button className="btn-number">=</button>
+      <button className="btn-equal" onClick={this.props.show}>=</button>
     );
   }
 }
@@ -32,4 +32,12 @@ class Operator extends React.Component {
   }
 }
 
-export {Number, Operator, Zero, Equal};
+class Reset extends React.Component {
+  render(){
+    return (
+      <button className="btn-number" onClick={this.props.reset}>C</button>
+    );
+  }
+}
+
+export {Number, Operator, Zero, Equal, Reset};

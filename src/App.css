@@ -73,3 +73,14 @@ h1 {
   display: flex;
   flex-direction: column;
 }
+
+.btn-equal {
+  color: #61dafb;
+  background-color: #222222;
+  padding: 10px 89px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #61dafb;
+  font-size: 4em;
+  font-family: Helvetica;
+}
