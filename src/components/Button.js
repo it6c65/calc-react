@@ -11,7 +11,7 @@ class Equal extends React.Component {
 class Zero extends React.Component {
   render(){
     return(
-      <button className="btn-number" onClick={this.props.addzero(0)}>0</button>
+      <button className="btn-number" onClick={this.props.addZero(0)}>0</button>
     );
   }
 }
@@ -27,7 +27,7 @@ class Number extends React.Component {
 class Operator extends React.Component {
   render(){
     return (
-      <button className="btn-operator" onClick={this.props.whatoperator(this.props.operator)}>{this.props.children}</button>
+      <button className="btn-operator" onClick={this.props.addOperator(this.props.operator)}>{this.props.children}</button>
     );
   }
 }

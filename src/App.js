@@ -2,22 +2,6 @@ import React from 'react';
 import './App.css';
 import * as Button from './components/Button'
 
-// let operators = {
-//   "+": (first, second) => {
-//     return first + second
-//   },
-//   "-": (first, second) => {
-//     return first - second
-//   },
-//   "*": (first, second) => {
-//     return first * second
-//   },
-//   "/": (first, second) => {
-//     return first / second
-//   }
-// }
-// // Example of use operators["+"](2,3)
-
 class Calc extends React.Component {
   constructor(props){
     super(props);
@@ -25,14 +9,26 @@ class Calc extends React.Component {
   }
   putNumber(value){
     return () => {
-      if(this.state.firstNumb === 0){
-        this.setState({
-          firstNumb: value
-        });
-      } else {
-        this.setState({
-          firstNumb: Number(String(this.state.firstNumb) + String(value))
-        });
+      if(this.state.operator !== ""){
+        if(this.state.secondNumb === 0){
+          this.setState({
+            secondNumb: value
+          });
+        } else {
+          this.setState({
+            secondNumb: Number(String(this.state.secondNumb) + String(value))
+          });
+        }
+      }else{
+        if(this.state.firstNumb === 0){
+          this.setState({
+            firstNumb: value
+          });
+        } else {
+          this.setState({
+            firstNumb: Number(String(this.state.firstNumb) + String(value))
+          });
+        }
       }
     }
   }
@@ -44,11 +40,16 @@ class Calc extends React.Component {
     }
   }
   render(){
-    let second_number;
+    let second_number, results;
     if (this.state.secondNumb === 0){
       second_number = "";
     }else {
       second_number = this.state.secondNumb;
+    }
+    if (this.state.result === 0){
+      results = "";
+    }else{
+      results = <div> = {this.state.result}</div>;
     }
     return(
     <div>
@@ -56,7 +57,7 @@ class Calc extends React.Component {
       <div className="show-results">
         <div className="results">
           <div>{this.state.firstNumb} {this.state.operator} {second_number} </div>
-          {/* <div>{this.state.result}</div> */}
+          {results}
         </div>
       </div>
       <div className="buttons">
@@ -78,13 +79,13 @@ class Calc extends React.Component {
           </div>
         </div>
         <div className="operations">
-          <Button.Operator operator="+" whatoperator={this.changeOperator.bind(this)}>+</Button.Operator>
-          <Button.Operator operator="-" whatoperator={this.changeOperator.bind(this)}>-</Button.Operator>
-          <Button.Operator operator="*" whatoperator={this.changeOperator.bind(this)}>&times;</Button.Operator>
-          <Button.Operator operator="/" whatoperator={this.changeOperator.bind(this)}>&divide;</Button.Operator>
+          <Button.Operator operator="+" addOperator={this.changeOperator.bind(this)}>+</Button.Operator>
+          <Button.Operator operator="-" addOperator={this.changeOperator.bind(this)}>-</Button.Operator>
+          <Button.Operator operator="*" addOperator={this.changeOperator.bind(this)}>&times;</Button.Operator>
+          <Button.Operator operator="/" addOperator={this.changeOperator.bind(this)}>&divide;</Button.Operator>
         </div>
       </div>
-      <Button.Zero addzero={this.putNumber.bind(this)} />
+      <Button.Zero addZero={this.putNumber.bind(this)} />
       <Button.Equal />
     </div>
     );
