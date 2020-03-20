@@ -1,40 +1,33 @@
-.App {
+body {
+  background-color: #282c34;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  color: #61dafb;
+  text-decoration: overline;
+  font-size: 8ex;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.results {
+  color: #61dafb;
+  background-color: #222222;
+  padding: 10px 12px;
+  font-size: 48px;
+  width: 350px;
+  text-align: center;
+  border-bottom-color: #61dafb;
+  border-top-color: #61dafb;
+  border-bottom-style: solid;
+  border-top-style: solid;
+  margin-bottom: 10px;
+  font-family: Helvetica;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.show-results {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .btn-number {
@@ -45,4 +38,38 @@
   border-style: solid;
   border-color: #61dafb;
   font-size: 4em;
+  font-family: Helvetica;
+}
+
+.btn-number:hover {
+  background-color: #61dafb;
+  color: #222222;
+  border-color: #222222;
+}
+
+.btn-operator {
+  color: #61dafb;
+  background-color: #222222;
+  padding: 10.8px 40px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #61dafb;
+  font-size: 42px;
+  font-family: Helvetica;
+}
+
+.btn-operator:hover {
+  background-color: #61dafb;
+  color: #222222;
+  border-color: #222222;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.operations {
+  display: flex;
+  flex-direction: column;
 }

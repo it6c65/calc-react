@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import * as Button from './components/Button'
 
 // let operators = {
 //   "+": (first, second) => {
@@ -18,54 +18,74 @@ import './App.css';
 // }
 // // Example of use operators["+"](2,3)
 
-class Btnum extends React.Component {
-  render(){
-    return (
-      <button className="btn-number" onClick={this.props.whatnumber(this.props.number)}>{this.props.children}</button>
-    );
-  }
-}
-
 class Calc extends React.Component {
   constructor(props){
     super(props);
-    this.state = { firstNumb: 0, secondNumb: 0, operator: "" };
+    this.state = { firstNumb: 0, secondNumb: 0, operator: "", result: 0 };
   }
-  update(value){
+  putNumber(value){
+    return () => {
+      if(this.state.firstNumb === 0){
+        this.setState({
+          firstNumb: value
+        });
+      } else {
+        this.setState({
+          firstNumb: Number(String(this.state.firstNumb) + String(value))
+        });
+      }
+    }
+  }
+  changeOperator(value){
     return () => {
       this.setState({
-        firstNumb: value
-      });
+        operator: value
+      })
     }
   }
   render(){
+    let second_number;
+    if (this.state.secondNumb === 0){
+      second_number = "";
+    }else {
+      second_number = this.state.secondNumb;
+    }
     return(
     <div>
       <h1>{this.props.title}</h1>
-      <div>Resultado</div>
-      <div>{this.state.firstNumb}</div>
-      <div>{this.state.secondNumb}</div>
-      <div>
-        <Btnum number={1} whatnumber={this.update.bind(this)}>1</Btnum>
-        <Btnum number={2} whatnumber={this.update.bind(this)}>2</Btnum>
-        <Btnum number={3} whatnumber={this.update.bind(this)}>3</Btnum>
+      <div className="show-results">
+        <div className="results">
+          <div>{this.state.firstNumb} {this.state.operator} {second_number} </div>
+          {/* <div>{this.state.result}</div> */}
+        </div>
       </div>
-      <div>
-        <Btnum number={4} whatnumber={this.update.bind(this)}>4</Btnum>
-        <Btnum number={5} whatnumber={this.update.bind(this)}>5</Btnum>
-        <Btnum number={6} whatnumber={this.update.bind(this)}>6</Btnum>
+      <div className="buttons">
+        <div>
+          <div>
+            <Button.Number number={1} whatNumber={this.putNumber.bind(this)}>1</Button.Number>
+            <Button.Number number={2} whatNumber={this.putNumber.bind(this)}>2</Button.Number>
+            <Button.Number number={3} whatNumber={this.putNumber.bind(this)}>3</Button.Number>
+          </div>
+          <div>
+            <Button.Number number={4} whatNumber={this.putNumber.bind(this)}>4</Button.Number>
+            <Button.Number number={5} whatNumber={this.putNumber.bind(this)}>5</Button.Number>
+            <Button.Number number={6} whatNumber={this.putNumber.bind(this)}>6</Button.Number>
+          </div>
+          <div>
+            <Button.Number number={7} whatNumber={this.putNumber.bind(this)}>7</Button.Number>
+            <Button.Number number={8} whatNumber={this.putNumber.bind(this)}>8</Button.Number>
+            <Button.Number number={9} whatNumber={this.putNumber.bind(this)}>9</Button.Number>
+          </div>
+        </div>
+        <div className="operations">
+          <Button.Operator operator="+" whatoperator={this.changeOperator.bind(this)}>+</Button.Operator>
+          <Button.Operator operator="-" whatoperator={this.changeOperator.bind(this)}>-</Button.Operator>
+          <Button.Operator operator="*" whatoperator={this.changeOperator.bind(this)}>&times;</Button.Operator>
+          <Button.Operator operator="/" whatoperator={this.changeOperator.bind(this)}>&divide;</Button.Operator>
+        </div>
       </div>
-      <div>
-        <Btnum number={7} whatnumber={this.update.bind(this)}>7</Btnum>
-        <Btnum number={8} whatnumber={this.update.bind(this)}>8</Btnum>
-        <Btnum number={9} whatnumber={this.update.bind(this)}>9</Btnum>
-      </div>
-      <div>
-        <button>+</button>
-        <button>-</button>
-        <button>&times;</button>
-        <button>&divide;</button>
-      </div>
+      <Button.Zero addzero={this.putNumber.bind(this)} />
+      <Button.Equal />
     </div>
     );
   }
@@ -73,11 +93,10 @@ class Calc extends React.Component {
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Calc title="Calculadora React" />
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
+    <div>
+      <main>
+        <Calc title="React - Calculator" />
+      </main>
     </div>
   );
 }
