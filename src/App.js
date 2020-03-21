@@ -82,15 +82,17 @@ class Calc extends React.Component {
     if (this.state.result === 0) {
       results = "";
     } else {
-      results = <div> = {this.state.result}</div>;
+      results = "= " + this.state.result;
     }
     return (
       <div>
         <h1>{this.props.title}</h1>
         <div className="show-results">
           <div className="results">
-            <div>{this.state.firstNumb} {this.state.operator} {second_number} </div>
-            {results}
+            <div> {this.state.firstNumb} {this.state.operator} {second_number} </div>
+            <div id="result">
+              {results}
+            </div>
           </div>
         </div>
         <div className="buttons">

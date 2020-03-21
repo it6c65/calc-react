@@ -12,16 +12,30 @@ h1 {
 .results {
   color: #61dafb;
   background-color: #222222;
-  padding: 10px 12px;
   font-size: 48px;
   width: 350px;
-  text-align: center;
+  text-align: right;
   border-bottom-color: #61dafb;
   border-top-color: #61dafb;
   border-bottom-style: solid;
   border-top-style: solid;
   margin-bottom: 10px;
   font-family: Helvetica;
+  width: 490px;
+  height: 120px;
+  overflow: auto;
+  overflow-y: auto;
+}
+
+.results div {
+  margin-right: 20px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.results div#result {
+  text-align: left;
+  color: #62fafb;
 }
 
 .show-results {
