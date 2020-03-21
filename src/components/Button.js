@@ -1,5 +1,6 @@
 import React from 'react';
 
+//button for show the results of the operations
 class Equal extends React.Component {
   render(){
     return(
@@ -8,6 +9,7 @@ class Equal extends React.Component {
   }
 }
 
+// button for add zeros in the screen
 class Zero extends React.Component {
   render(){
     return(
@@ -16,6 +18,7 @@ class Zero extends React.Component {
   }
 }
 
+// button numbers of the calc
 class Number extends React.Component {
   render(){
     return (
@@ -24,6 +27,7 @@ class Number extends React.Component {
   }
 }
 
+// button operators of the calc
 class Operator extends React.Component {
   render(){
     return (
@@ -32,6 +36,7 @@ class Operator extends React.Component {
   }
 }
 
+// button for delete all
 class Reset extends React.Component {
   render(){
     return (

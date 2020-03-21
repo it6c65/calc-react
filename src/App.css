@@ -1,14 +1,17 @@
+/* center in the screen */
 body {
   background-color: #282c34;
   text-align: center;
 }
 
+/* title */
 h1 {
   color: #61dafb;
   text-decoration: overline;
   font-size: 8ex;
 }
 
+/* operation's screen */
 .results {
   color: #61dafb;
   background-color: #222222;
@@ -27,23 +30,28 @@ h1 {
   overflow-y: auto;
 }
 
+/* first and second values */
 .results div {
   margin-right: 20px;
   margin-bottom: 0px;
   padding-bottom: 0px;
 }
 
+/* final result */
 .results div#result {
   text-align: left;
   color: #62fafb;
 }
 
+
+/* center the operation's screen with buttons */
 .show-results {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* buttons for the numbers */
 .btn-number {
   color: #61dafb;
   background-color: #222222;
@@ -61,6 +69,7 @@ h1 {
   border-color: #222222;
 }
 
+/* the operators has diferents sizes than other buttons */
 .btn-operator {
   color: #61dafb;
   background-color: #222222;
@@ -78,6 +87,7 @@ h1 {
   border-color: #222222;
 }
 
+/* put the buttons in columns */
 .buttons {
   display: flex;
   flex-direction: row;
@@ -88,6 +98,7 @@ h1 {
   flex-direction: column;
 }
 
+/* unique style for equal boton, only size is different */
 .btn-equal {
   color: #61dafb;
   background-color: #222222;

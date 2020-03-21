@@ -7,28 +7,37 @@ class Calc extends React.Component {
     super(props);
     this.state = { firstNumb: 0, secondNumb: 0, operator: "", result: 0 };
   }
+  // Put number in the screen
   putNumber(value) {
     return () => {
+      // If there is a result, change it with the first numb
       if(this.state.result !== 0){
         this.setState({
           firstNumb: this.state.result, secondNumb: value, result: 0
         });
       }else {
+      // While there is no operator exists the second numbs are forbidden
         if (this.state.operator !== "") {
+          // If the first time just one value with second number
           if (this.state.secondNumb === 0) {
             this.setState({
               secondNumb: value
             });
+          // the second time and after, change to string both values,
+          // add another string and change a integer again with second number
           } else {
             this.setState({
               secondNumb: Number(String(this.state.secondNumb) + String(value))
             });
           }
         } else {
+          // If the first time just one value with first number
           if (this.state.firstNumb === 0) {
             this.setState({
               firstNumb: value
             });
+          // the second time and after, change to string both values,
+          // add another string and change a integer again with first number
           } else {
             this.setState({
               firstNumb: Number(String(this.state.firstNumb) + String(value))
@@ -38,6 +47,7 @@ class Calc extends React.Component {
       }
     }
   }
+  // change the operator what calc will use
   changeOperator(value) {
     return () => {
       this.setState({
@@ -46,6 +56,8 @@ class Calc extends React.Component {
     }
   }
   showResults() {
+    // Do the operations needed
+    // expressed cleaned
     let DoOperation = {
       "+": (first, second) => {
         return first + second;
@@ -63,10 +75,13 @@ class Calc extends React.Component {
         return 0
       }
     }
+    // put the result of operation in the state
+    // for show it in the screen
     this.setState( state => ({
       result: DoOperation[state.operator](state.firstNumb, state.secondNumb)
     }));
   }
+  // Delete all values
   resetValues(){
     this.setState( state => ({
       firstNumb: 0, secondNumb: 0, result:0, operator: ""
@@ -74,11 +89,13 @@ class Calc extends React.Component {
   }
   render() {
     let second_number, results;
+    // if second number is cero not show in screen
     if (this.state.secondNumb === 0) {
       second_number = "";
     } else {
       second_number = this.state.secondNumb;
     }
+    // the same with result
     if (this.state.result === 0) {
       results = "";
     } else {
@@ -88,6 +105,7 @@ class Calc extends React.Component {
       <div>
         <h1>{this.props.title}</h1>
         <div className="show-results">
+          {/* operations and final results */}
           <div className="results">
             <div> {this.state.firstNumb} {this.state.operator} {second_number} </div>
             <div id="result">
