@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import * as Button from './components/Button'
+import Do from './components/Action'
 import PropTypes from 'prop-types'
-
 
 class Calc extends React.Component {
   constructor(props) {
@@ -64,29 +64,10 @@ class Calc extends React.Component {
     }
   }
   showResults() {
-    // Do the operations needed
-    // expressed cleaned
-    let DoOperation = {
-      "+": (first, second) => {
-        return first + second;
-      },
-      "-": (first, second) => {
-        return first - second;
-      },
-      "*": (first, second) => {
-        return first * second;
-      },
-      "/": (first, second) => {
-        return first / second;
-      },
-      "": (first, second) => {
-        return 0
-      }
-    }
     // put the result of operation in the state
     // for show it in the screen
     this.setState(state => ({
-      result: DoOperation[state.operator](state.firstNumb, state.secondNumb)
+      result: Do[state.operator](state.firstNumb, state.secondNumb)
     }));
   }
   // Delete all values
@@ -94,6 +75,13 @@ class Calc extends React.Component {
     this.setState(state => ({
       firstNumb: 0, secondNumb: 0, result: 0, operator: ""
     }));
+  }
+  rowNumbers(array){
+    let numbers = array;
+    let listNumbers = numbers.map((num) =>
+        <Button.Number key={num.toString()} number={Number(num)} whatNumber={this.putNumber.bind(this)}>{num.toString()}</Button.Number>
+    );
+    return listNumbers;
   }
   render() {
     let second_number, results;
@@ -109,9 +97,9 @@ class Calc extends React.Component {
     } else {
       results = "= " + this.state.result;
     }
-    // let firstRow = [1,2,3];
-    // let MediumRow = [4,5,6];
-    // let lastRow = [7,8,9];
+    let firstRow = [1,2,3];
+    let mediumRow = [4,5,6];
+    let lastRow = [7,8,9];
     return (
       <div>
         <h1>{this.props.title}</h1>
@@ -127,14 +115,13 @@ class Calc extends React.Component {
         <div className="buttons">
           <div>
             <div>
-              <Button.Number number={4} whatNumber={this.putNumber.bind(this)}>4</Button.Number>
-              <Button.Number number={5} whatNumber={this.putNumber.bind(this)}>5</Button.Number>
-              <Button.Number number={6} whatNumber={this.putNumber.bind(this)}>6</Button.Number>
+              {this.rowNumbers(firstRow)}
             </div>
             <div>
-              <Button.Number number={7} whatNumber={this.putNumber.bind(this)}>7</Button.Number>
-              <Button.Number number={8} whatNumber={this.putNumber.bind(this)}>8</Button.Number>
-              <Button.Number number={9} whatNumber={this.putNumber.bind(this)}>9</Button.Number>
+              {this.rowNumbers(mediumRow)}
+            </div>
+            <div>
+              {this.rowNumbers(lastRow)}
             </div>
           </div>
           <div className="operations">
