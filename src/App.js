@@ -8,14 +8,12 @@ class Calc extends React.Component {
   constructor(props) {
     super(props);
     this.state = { firstNumb: 0, secondNumb: 0, operator: "", result: 0 };
-    this.showResults = this.showResults.bind(this);
-    this.resetValues = this.resetValues.bind(this);
   }
   componentDidMount(){
-    window.addEventListener("keypress", this.handleKeys);
+    window.addEventListener("keydown", this.handleKeys);
   }
   componentWillUnmount(){
-    window.removeEventListener("keypress", this.handleKeys);
+    window.removeEventListener("keydown", this.handleKeys);
   }
   static propTypes = {
     title: PropTypes.string
@@ -70,14 +68,15 @@ class Calc extends React.Component {
   showResults = () => {
     // put the result of operation in the state
     // for show it in the screen
+    let finalResult = Do(this.state.operator, this.state.firstNumb, this.state.secondNumb)
     this.setState({
-      result: Do[this.state.operator](this.state.firstNumb, this.state.secondNumb)
+      result: finalResult
     });
   }
   // Delete all values
   resetValues = () => {
     this.setState({
-      firstNumb: 0, secondNumb: 0, result: 0, operator: ""
+      firstNumb: 0, secondNumb: 0, operator: "", result: 0
     });
   }
   // Rows of buttons
@@ -102,6 +101,12 @@ class Calc extends React.Component {
     return () => {
       this.changeOperator(value)
     }
+  }
+  handleClickResult = () => {
+    this.showResults()
+  }
+  handleClickReset = () => {
+    this.resetValues()
   }
   // Controlling the key events
   handleKeys = event => {
@@ -148,10 +153,10 @@ class Calc extends React.Component {
         case "Enter":
           this.showResults()
           break
-        case "Backspace":
+        case "Delete":
           this.resetValues()
           break
-        case "Delete":
+        case "Backspace":
           this.resetValues()
           break
         default:
@@ -219,9 +224,9 @@ class Calc extends React.Component {
             </Button.Operator>
           </div>
         </div>
-        <Button.Reset reset={this.resetValues} />
+        <Button.Reset reset={this.handleClickReset.bind(this)} />
         <Button.Zero addZero={this.handleClickNumber.bind(this)} />
-        <Button.Equal show={this.showResults} />
+        <Button.Equal show={this.handleClickResult.bind(this)} />
       </div>
     );
   }
