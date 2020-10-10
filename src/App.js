@@ -8,6 +8,14 @@ class Calc extends React.Component {
   constructor(props) {
     super(props);
     this.state = { firstNumb: 0, secondNumb: 0, operator: "", result: 0 };
+    this.showResults = this.showResults.bind(this);
+    this.resetValues = this.resetValues.bind(this);
+  }
+  componentDidMount(){
+    window.addEventListener("keypress", this.handleKeys);
+  }
+  componentWillUnmount(){
+    window.removeEventListener("keypress", this.handleKeys);
   }
   static propTypes = {
     title: PropTypes.string
@@ -16,72 +24,140 @@ class Calc extends React.Component {
     title: "React - Calculator"
   }
   // Put number in the screen
-  putNumber(value) {
-    return () => {
-      // If there is a result, change it with the first numb
-      if (this.state.result !== 0) {
-        this.setState({
-          firstNumb: this.state.result, secondNumb: value, result: 0
-        });
-      } else {
-        // While there is no operator exists the second numbs are forbidden
-        if (this.state.operator !== "") {
-          // If the first time just one value with second number
-          if (this.state.secondNumb === 0) {
-            this.setState({
-              secondNumb: value
-            });
-            // the second time and after, change to string both values,
-            // add another string and change a integer again with second number
-          } else {
-            this.setState({
-              secondNumb: Number(String(this.state.secondNumb) + String(value))
-            });
-          }
+  putNumber = value => {
+    // If there is a result, change it with the first numb
+    if (this.state.result !== 0) {
+      this.setState({
+        firstNumb: this.state.result, secondNumb: value, result: 0
+      });
+    } else {
+      // While there is no operator exists the second numbs are forbidden
+      if (this.state.operator !== "") {
+        // If the first time just one value with second number
+        if (this.state.secondNumb === 0) {
+          this.setState({
+            secondNumb: value
+          });
+          // the second time and after, change to string both values,
+          // add another string and change a integer again with second number
         } else {
-          // If the first time just one value with first number
-          if (this.state.firstNumb === 0) {
-            this.setState({
-              firstNumb: value
-            });
-            // the second time and after, change to string both values,
-            // add another string and change a integer again with first number
-          } else {
-            this.setState({
-              firstNumb: Number(String(this.state.firstNumb) + String(value))
-            });
-          }
+          this.setState({
+            secondNumb: Number(String(this.state.secondNumb) + String(value))
+          });
+        }
+      } else {
+        // If the first time just one value with first number
+        if (this.state.firstNumb === 0) {
+          this.setState({
+            firstNumb: value
+          });
+          // the second time and after, change to string both values,
+          // add another string and change a integer again with first number
+        } else {
+          this.setState({
+            firstNumb: Number(String(this.state.firstNumb) + String(value))
+          });
         }
       }
     }
   }
   // change the operator what calc will use
-  changeOperator(value) {
-    return () => {
-      this.setState({
-        operator: value
-      })
-    }
+  changeOperator = value => {
+    this.setState({
+      operator: value
+    })
   }
-  showResults() {
+  showResults = () => {
     // put the result of operation in the state
     // for show it in the screen
-    this.setState(state => ({
-      result: Do[state.operator](state.firstNumb, state.secondNumb)
-    }));
+    this.setState({
+      result: Do[this.state.operator](this.state.firstNumb, this.state.secondNumb)
+    });
   }
   // Delete all values
-  resetValues() {
-    this.setState(state => ({
+  resetValues = () => {
+    this.setState({
       firstNumb: 0, secondNumb: 0, result: 0, operator: ""
-    }));
+    });
   }
-  rowNumbers(array){
+  // Rows of buttons
+  rowNumbers = array => {
     let numbers = array;
     let listNumbers = numbers.map((num) =>
-        <Button.Number key={num.toString()} number={Number(num)} whatNumber={this.putNumber.bind(this)}>{num.toString()}</Button.Number>
+        <Button.Number key={num.toString()}
+                       number={Number(num)}
+                       whatNumber={this.handleClickNumber.bind(this)}>
+          {num.toString()}
+        </Button.Number>
     );
     return listNumbers;
+  }
+  // Controlling the clicks events
+  handleClickNumber = value => {
+    return () => {
+      this.putNumber(value)
+    }
+  }
+  handleClickOperator = value => {
+    return () => {
+      this.changeOperator(value)
+    }
+  }
+  // Controlling the key events
+  handleKeys = event => {
+    switch (event.key) {
+        case "1":
+          this.putNumber(event.key)
+          break
+        case "2":
+          this.putNumber(event.key)
+          break
+        case "3":
+          this.putNumber(event.key)
+          break
+        case "4":
+          this.putNumber(event.key)
+          break
+        case "5":
+          this.putNumber(event.key)
+          break
+        case "6":
+          this.putNumber(event.key)
+          break
+        case "7":
+          this.putNumber(event.key)
+          break
+        case "8":
+          this.putNumber(event.key)
+          break
+        case "9":
+          this.putNumber(event.key)
+          break
+        case "+":
+          this.changeOperator(event.key)
+          break
+        case "-":
+          this.changeOperator(event.key)
+          break
+        case "*":
+          this.changeOperator(event.key)
+          break
+        case "/":
+          this.changeOperator(event.key)
+          break
+        case "Enter":
+          this.showResults()
+          break
+        case "Backspace":
+          this.resetValues()
+          break
+        case "Delete":
+          this.resetValues()
+          break
+        default:
+          console.log(event.key, "is not permited")
+        break
+    }
   }
   render() {
     let second_number, results;
@@ -125,15 +201,27 @@ class Calc extends React.Component {
             </div>
           </div>
           <div className="operations">
-            <Button.Operator operator="+" addOperator={this.changeOperator.bind(this)}>+</Button.Operator>
-            <Button.Operator operator="-" addOperator={this.changeOperator.bind(this)}>-</Button.Operator>
-            <Button.Operator operator="*" addOperator={this.changeOperator.bind(this)}>&times;</Button.Operator>
-            <Button.Operator operator="/" addOperator={this.changeOperator.bind(this)}>&divide;</Button.Operator>
+            <Button.Operator operator="+"
+                             addOperator={this.handleClickOperator.bind(this)}>
+              +
+            </Button.Operator>
+            <Button.Operator operator="-"
+                             addOperator={this.handleClickOperator.bind(this)}>
+              -
+            </Button.Operator>
+            <Button.Operator operator="*"
+                             addOperator={this.handleClickOperator.bind(this)}>
+              &times;
+            </Button.Operator>
+            <Button.Operator operator="/"
+                             addOperator={this.handleClickOperator.bind(this)}>
+              &divide;
+            </Button.Operator>
           </div>
         </div>
-        <Button.Reset reset={this.resetValues.bind(this)} />
-        <Button.Zero addZero={this.putNumber.bind(this)} />
-        <Button.Equal show={this.showResults.bind(this)} />
+        <Button.Reset reset={this.resetValues} />
+        <Button.Zero addZero={this.handleClickNumber.bind(this)} />
+        <Button.Equal show={this.showResults} />
       </div>
     );
   }
